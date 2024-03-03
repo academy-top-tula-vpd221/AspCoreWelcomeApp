@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="mess"></div>
+    <div>
+        <p>Name: <input type="text" name="name" id="name"></p>
+        <p>Age: <input type="number" name="age" id="age"></p>
+        <button id="send_json">Send</button>
+    </div>
+    <script>
+        let btn = document.getElementById("send_json");
+        btn.addEventListener("click", send_json);
+
+        async function send_json(){
+            let response = await fetch("api/empl", {
+                method: "POST",
+                headers:{
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    age: document.getElementById("age").value,
+                }),
+            });
+            let message = await response.json();
+            document.getElementById("mess").innerHTML = message.text;
+        }
+    </script>
+</body>
+</html>
